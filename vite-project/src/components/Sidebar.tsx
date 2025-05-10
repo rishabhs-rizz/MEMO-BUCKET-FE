@@ -5,20 +5,29 @@ import { YoutubeIcon } from "../icons/youtubeIcon";
 import { SidebarItems } from "./SidebarItems";
 
 //@ts-ignore
-export function Sidebar({SidebarOpen, SetSidebarOpen}){
-    if(!SidebarOpen){
-      return <div className='fixed top-0 left-0'>
-      <div className='hover:cursor-pointer hover:bg-slate-200' onClick={()=> {SetSidebarOpen(!SidebarOpen)}}>
-        <SidebarIcon/>
+export function Sidebar({ SidebarOpen, SetSidebarOpen }) {
+  return (
+    <div
+      className={`transition-all duration-300 bg-white min-h-screen ${
+        SidebarOpen ? "w-48" : "w-12"
+      }`}
+    >
+      <div
+        className="p-2 hover:cursor-pointer hover:bg-slate-200"
+        onClick={() => SetSidebarOpen(!SidebarOpen)}
+      >
+        <SidebarIcon />
       </div>
-      </div>
-    }
-    return <div className=' transition-all duration-150 w-0 md:w-48 h-screen bg-white'>
-      <span className='hover:cursor-pointer' onClick={()=> {SetSidebarOpen(!SidebarOpen)}}>
-        <SidebarIcon/>
-      </span>
-      <div className="flex justify-center pt-2 text-lg font-semibold gap-2 text-blue-700"><BrainIcon/> BRAINLY</div>
-      <div><SidebarItems icon={<TwitterIcon/>} text={"Tweets"}/></div>
-      <div><SidebarItems icon={<YoutubeIcon/>} text={"Videos"}/></div>
+
+      {SidebarOpen && (
+        <>
+          <div className="flex justify-center pt-2 text-lg font-semibold gap-2 text-blue-700">
+            <BrainIcon /> BRAINLY
+          </div>
+          <SidebarItems icon={<TwitterIcon />} text="Tweets" />
+          <SidebarItems icon={<YoutubeIcon />} text="Videos" />
+        </>
+      )}
     </div>
-  }
+  );
+}

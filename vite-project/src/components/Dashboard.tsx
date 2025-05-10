@@ -6,11 +6,9 @@ export function DashBoard() {
   const [SidebarOpen, SetSidebarOpen] = useState(true);
 
   return (
-    <div className="flex">
-      <span>
-        <Sidebar SidebarOpen={SidebarOpen} SetSidebarOpen={SetSidebarOpen} />
-      </span>
-      <div className="w-full">
+    <div className="flex h-screen">
+      <Sidebar SidebarOpen={SidebarOpen} SetSidebarOpen={SetSidebarOpen} />
+      <div className="flex-1 overflow-auto">
         <MainComponent />
       </div>
     </div>
