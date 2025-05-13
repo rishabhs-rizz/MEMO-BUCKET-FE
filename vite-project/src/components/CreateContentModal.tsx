@@ -7,13 +7,15 @@ import axios from "axios";
 //@ts-ignore
 export function CreateContentModal({ open, onClose, onSubmit }) {
   return (
-    <div>
+    <>
       {open && (
-        <div className="w-screen h-screen m-0 p-0 fixed bg-slate-500 opacity-50 flex justify-center items-center">
-          <InputComponent onClose={onClose} onSubmit={onSubmit} />
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white w-full max-w-md p-6 rounded-2xl shadow-2xl relative">
+            <InputComponent onClose={onClose} onSubmit={onSubmit} />
+          </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
@@ -32,6 +34,7 @@ function InputComponent({ onClose, onSubmit }) {
     }
 
     try {
+      const token = localStorage.getItem("token");
       const res = await axios.post(
         "http://localhost:3000/api/v1/content",
         {
@@ -41,18 +44,13 @@ function InputComponent({ onClose, onSubmit }) {
         },
         {
           headers: {
-            Authorization:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTljMzgxMmI0YTg4OTFiZjk5ZTJlMiIsImlhdCI6MTc0NjUxODkzM30.sWfKuQMcwnYk6EV_8h31_s0YLRE_D4UOq52FoSo4B7c",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
       console.log("Content added:", res.data);
-
-      // Call the onSubmit callback with the new content
       onSubmit(res.data);
-
-      // Close the modal
       onClose();
     } catch (err) {
       console.error("Error in inserting content:", err);
@@ -61,57 +59,55 @@ function InputComponent({ onClose, onSubmit }) {
 
   return (
     <>
-      <span className="bg-gray-200 rounded-md border-gray-400 border-4">
-        <div className="flex justify-end hover:cursor-pointer">
-          <div onClick={onClose}>
-            <CloseIcon />
-          </div>
-        </div>
-        <div className="p-2">
-          <input
-            onChange={(e) => {
-              setText(e.target.value);
-            }}
-            type="text"
-            placeholder="text"
-          />
-          <br />
-          <br />
-          <input
-            onChange={(e) => {
-              setLink(e.target.value);
-            }}
-            type="text"
-            placeholder="Link"
-          />
-        </div>
-        <div className="flex justify-center gap-2">
+      <div className="absolute top-4 right-4 cursor-pointer" onClick={onClose}>
+        <CloseIcon />
+      </div>
+
+      <h2 className="text-xl font-semibold mb-4 text-center">
+        Add New Content
+      </h2>
+
+      <div className="flex flex-col gap-4">
+        <input
+          type="text"
+          placeholder="Enter Title"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+
+        <input
+          type="text"
+          placeholder="Enter Link"
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+
+        <div className="flex justify-center gap-4">
           <Button
             variant="primary"
             size="md"
-            text="youtube"
-            onClick={() => {
-              setContentType("youtube");
-            }}
+            text="YouTube"
+            onClick={() => setContentType("youtube")}
           />
           <Button
             variant="primary"
             size="md"
-            text="twitter"
-            onClick={() => {
-              setContentType("twitter");
-            }}
+            text="Twitter"
+            onClick={() => setContentType("twitter")}
           />
         </div>
-        <div className="flex justify-center pb-2">
+
+        <div className="flex justify-center pt-2">
           <Button
             variant="primary"
             size="md"
-            text="submit"
-            onClick={handleSubmit} // Use the handleSubmit function
+            text="Submit"
+            onClick={handleSubmit}
           />
         </div>
-      </span>
+      </div>
     </>
   );
 }
