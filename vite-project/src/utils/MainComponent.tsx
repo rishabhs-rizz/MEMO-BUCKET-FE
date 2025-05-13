@@ -5,19 +5,26 @@ import { CreateContentModal } from "../components/CreateContentModal";
 import { PlusIcon } from "../icons/plusicon";
 import { ShareIcon } from "../icons/shareicon";
 import axios from "axios";
+import ShareContentModal from "../components/ShareContentModal";
 
 export function MainComponent() {
-  const [modalOpen, SetModalOpen] = useState(false);
+  const [CreateContentmodalOpen, SetCreateContentModalOpen] = useState(false);
+  const [ShareModalOpen, SetShareModalOpen] = useState(false);
   const [contentItems, setContentItems] = useState<CardProps[]>([]);
 
+  const token = localStorage.getItem("token") || "";
+  if (!token) {
+    window.location.href = "http://localhost:5173/signin";
+  }
+
   const fetchData = async () => {
+    console.log("Fetching data with token:", token);
     try {
       const response = await axios.get<{ content: CardProps[] }>(
         "http://localhost:3000/api/v1/content",
         {
           headers: {
-            Authorization:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTljMzgxMmI0YTg4OTFiZjk5ZTJlMiIsImlhdCI6MTc0NjUxODkzM30.sWfKuQMcwnYk6EV_8h31_s0YLRE_D4UOq52FoSo4B7c",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -32,28 +39,32 @@ export function MainComponent() {
   useEffect(() => {
     fetchData();
   }, []);
-  const handleAddContent = async (newContent: CardProps) => {
+  const handleAddContent = async () => {
     await fetchData();
-    setContentItems((prevItems) => [...prevItems, newContent]);
-    console.log("all content items", contentItems);
-    console.log("new content", newContent);
   };
 
   return (
     <>
       <CreateContentModal
-        open={modalOpen}
+        open={CreateContentmodalOpen}
         onClose={() => {
-          SetModalOpen(false);
+          SetCreateContentModalOpen(false);
         }}
         onSubmit={handleAddContent}
+      />
+
+      <ShareContentModal
+        open={ShareModalOpen}
+        onClose={() => {
+          SetShareModalOpen(false);
+        }}
       />
 
       <div className="p-4 bg-gray-300 min-h-screen">
         <div className="pb-2 flex justify-end gap-4">
           <Button
             onClick={() => {
-              SetModalOpen(true);
+              SetCreateContentModalOpen(true);
             }}
             variant="primary"
             size="sm"
@@ -62,7 +73,7 @@ export function MainComponent() {
           ></Button>
           <Button
             onClick={() => {
-              SetModalOpen(true);
+              SetShareModalOpen(true);
             }}
             variant="secondary"
             size="md"
