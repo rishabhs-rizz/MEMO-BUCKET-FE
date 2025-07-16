@@ -1,13 +1,11 @@
-
 //@ts-ignore
-export function SidebarItems ({icon, text}){
-
-    return <div className="flex pl-6 gap-3 text-base m-2 pt-4 hover:cursor-pointer hover:bg-slate-400 hover:p-2">
-        <div>
-            {icon}
-        </div>
-        <div>
-            {text}
-        </div>
+export function SidebarItems({ icon, text }) {
+  return (
+    <div className="flex justify-center items-center gap-2 pb-4 text-base hover:cursor-pointer hover:bg-slate-400 hover:text-white transition-all duration-300">
+      <span className="flex items-center gap-2 translate-y-2">
+        {icon}
+        {text}
+      </span>
     </div>
+  );
 }
