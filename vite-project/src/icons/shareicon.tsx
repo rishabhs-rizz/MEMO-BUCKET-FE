@@ -6,7 +6,7 @@ export const ShareIcon = (props: Icons) => (
     fill="none"
     viewBox="0 0 24 24"
     stroke-width="1.5"
-    stroke="white"
+    stroke="blue"
     className={SizeVariants[props.size]}
   >
     <path

@@ -65,6 +65,7 @@ export function MainComponent() {
           <Button
             onClick={() => {
               SetCreateContentModalOpen(true);
+              return "createContent";
             }}
             variant="primary"
             size="sm"
@@ -74,6 +75,7 @@ export function MainComponent() {
           <Button
             onClick={() => {
               SetShareModalOpen(true);
+              return "ShareContent";
             }}
             variant="secondary"
             size="md"
