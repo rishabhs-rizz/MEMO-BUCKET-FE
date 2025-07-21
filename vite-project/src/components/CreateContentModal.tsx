@@ -89,19 +89,13 @@ function InputComponent({ onClose, onSubmit }) {
             variant="primary"
             size="md"
             text="YouTube"
-            onClick={() => {
-              setContentType("youtube");
-              return ContentType;
-            }}
+            onClick={() => setContentType("youtube")}
           />
           <Button
             variant="primary"
             size="md"
             text="Twitter"
-            onClick={() => {
-              setContentType("twitter");
-              return ContentType;
-            }}
+            onClick={() => setContentType("twitter")}
           />
         </div>
 
@@ -111,7 +105,7 @@ function InputComponent({ onClose, onSubmit }) {
             size="md"
             text="Submit"
             onClick={() => {
-              handleSubmit;
+              handleSubmit();
               return "submit";
             }}
           />

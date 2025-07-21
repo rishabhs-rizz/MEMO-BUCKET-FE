@@ -28,9 +28,7 @@ export function MainComponent() {
           },
         }
       );
-      console.log("Fetched content:", response.data.content);
-      setContentItems(response.data.content); // Update state with fetched data
-      console.log("Content items:", contentItems);
+      setContentItems(response.data.content);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -61,7 +59,7 @@ export function MainComponent() {
       />
 
       <div className="p-4 bg-gray-300 min-h-screen">
-        <div className="pb-2 flex justify-end gap-4">
+        <div className="pb-4 flex justify-end gap-4">
           <Button
             onClick={() => {
               SetCreateContentModalOpen(true);
@@ -91,14 +89,19 @@ export function MainComponent() {
         )}
 
         {contentItems.length !== 0 && (
-          <div className="flex flex-wrap gap-20">
+          <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
             {contentItems.map((item) => (
-              <div key={item._id}>
+              <div key={item._id} className="break-inside-avoid mb-4 w-full">
                 <Card
                   _id={item._id}
                   ContentType={item.ContentType}
                   link={item.link}
                   title={item.title}
+                  onDelete={(id) => {
+                    setContentItems((prevItems) =>
+                      prevItems.filter((i) => i._id !== id)
+                    );
+                  }}
                 />
               </div>
             ))}

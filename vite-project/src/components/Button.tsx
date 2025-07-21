@@ -1,16 +1,12 @@
 import { ReactElement } from "react";
+
 interface ButtonProps {
   variant: "primary" | "secondary";
   size: "sm" | "md" | "lg";
   text: string;
   startIcon?: ReactElement;
   endIcon?: ReactElement;
-  onClick?: () =>
-    | "youtube"
-    | "twitter"
-    | "submit"
-    | "createContent"
-    | "ShareContent";
+  onClick?: () => void;
   wide?: boolean;
   loading?: boolean;
 }
