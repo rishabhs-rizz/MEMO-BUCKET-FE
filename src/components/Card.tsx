@@ -59,7 +59,7 @@ export const Card = (props: CardProps) => {
           </span>
           <div className="flex items-center space-x-2">
             <a href={props.link} target="_blank" rel="noopener noreferrer">
-              <GotoLinkIcon size="md" /> //the GotoLinkIcon is used here
+              <GotoLinkIcon size="md" />
             </a>
             <span
               onClick={() => setDelButtonClicked(true)}
