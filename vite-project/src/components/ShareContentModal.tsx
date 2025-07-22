@@ -1,6 +1,6 @@
-// ShareBrain.tsx
 import { useState } from "react";
 import axios from "axios";
+import { OthersBrain } from "./OthersBrain";
 
 //@ts-ignore
 export default function ShareContentModal({ open, onClose }) {
@@ -12,6 +12,11 @@ function ShareContentComponent({ onClose }) {
   const [link, setLink] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [view, setView] = useState(false);
+  const [otherBrainLink, setOtherBrainLink] = useState("");
+
+  let shareLink: string | null = null;
+
   const token = localStorage.getItem("token");
   const handleCopy = () => {
     const input = document.createElement("input");
@@ -45,8 +50,9 @@ function ShareContentComponent({ onClose }) {
         }
       );
       if (response.data?.link) {
-        const fullLink = `${window.location.origin}/brain/${response.data.link}`;
+        const fullLink = `${window.location.origin}/api/v1/brain/${response.data.link}`;
         setLink(fullLink);
+        shareLink = fullLink;
         console.log("Link created:", fullLink);
       } else {
         setLink(null);
@@ -56,6 +62,12 @@ function ShareContentComponent({ onClose }) {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleViewToggle = () => {
+    setView(!view);
+    console.log("View toggled:", !view);
+    <OthersBrain />;
   };
 
   return (
@@ -78,7 +90,7 @@ function ShareContentComponent({ onClose }) {
             <input
               type="text"
               readOnly
-              value={link}
+              value={link ?? ""}
               className="w-full border border-gray-300 px-3 py-2 rounded mb-3 text-sm"
             />
             <div className="flex justify-between items-center space-x-3">
@@ -88,6 +100,41 @@ function ShareContentComponent({ onClose }) {
               >
                 {copied ? "Copied!" : "Copy Link"}
               </button>
+            </div>
+          </>
+        ) : view ? (
+          <>
+            <div className="mt-4">
+              <p className="text-sm text-gray-700 mb-2">
+                Get me into his brain:
+              </p>
+              <div className="space-y-2">
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 px-3 py-2 rounded mb-3 text-sm text-black"
+                  placeholder="Enter link here"
+                  value={otherBrainLink}
+                  onChange={(e) => {
+                    let value = e.target.value;
+                    if (value && !value.startsWith("http")) {
+                      value = `https://${value}`;
+                    }
+                    setOtherBrainLink(value);
+                  }}
+                />
+                <button
+                  disabled={!otherBrainLink}
+                  className="bg-violet-600 text-white px-6 py-2 rounded hover:bg-violet-700 transition"
+                >
+                  <a
+                    href={otherBrainLink || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Slide into it
+                  </a>
+                </button>
+              </div>
             </div>
           </>
         ) : (
@@ -103,7 +150,10 @@ function ShareContentComponent({ onClose }) {
               Create Share Link
             </button>
             <div></div>
-            <button className="border-black border text-black px-6 py-2 rounded hover:bg-violet-600 hover:text-white transition m-4">
+            <button
+              onClick={handleViewToggle}
+              className="border-black border text-black px-6 py-2 rounded hover:bg-violet-600 hover:text-white transition m-4"
+            >
               See Others Brain
             </button>
           </div>
