@@ -1,7 +1,7 @@
-import { ShareIcon } from "../icons/shareicon";
 import { DeleteIcon } from "../icons/deleteicon";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { GotoLinkIcon } from "../icons/GotoLink";
 
 export type ContentType = "youtube" | "twitter";
 
@@ -59,7 +59,7 @@ export const Card = (props: CardProps) => {
           </span>
           <div className="flex items-center space-x-2">
             <a href={props.link} target="_blank" rel="noopener noreferrer">
-              <ShareIcon size="md" />
+              <GotoLinkIcon size="md" />
             </a>
             <span
               onClick={() => setDelButtonClicked(true)}
