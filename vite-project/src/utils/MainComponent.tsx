@@ -59,7 +59,7 @@ export function MainComponent() {
       />
 
       <div className="p-4 bg-gray-300 min-h-screen">
-        <div className="pb-4 flex justify-end gap-4">
+        <div className="pb-4 flex justify-end md:gap-4">
           <Button
             onClick={() => {
               SetCreateContentModalOpen(true);
