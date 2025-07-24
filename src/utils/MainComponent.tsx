@@ -28,9 +28,7 @@ export function MainComponent() {
           },
         }
       );
-      console.log("Fetched content:", response.data.content);
       setContentItems(response.data.content);
-      console.log("Content items:", contentItems);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -61,7 +59,7 @@ export function MainComponent() {
       />
 
       <div className="p-4 bg-gray-300 min-h-screen">
-        <div className="pb-2 flex justify-end gap-4">
+        <div className="pb-4 flex justify-end md:gap-4">
           <Button
             onClick={() => {
               SetCreateContentModalOpen(true);
@@ -99,6 +97,11 @@ export function MainComponent() {
                   ContentType={item.ContentType}
                   link={item.link}
                   title={item.title}
+                  onDelete={(id) => {
+                    setContentItems((prevItems) =>
+                      prevItems.filter((i) => i._id !== id)
+                    );
+                  }}
                 />
               </div>
             ))}
