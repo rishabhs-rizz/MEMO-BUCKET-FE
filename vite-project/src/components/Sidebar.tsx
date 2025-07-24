@@ -1,4 +1,5 @@
 import { BrainIcon } from "../icons/BrainIcon";
+import { HomeIcon } from "../icons/HomeIcon";
 import { SidebarIcon } from "../icons/Sidebaricon";
 import { TwitterIcon } from "../icons/twitterIcon";
 import { YoutubeIcon } from "../icons/youtubeIcon";
@@ -22,6 +23,7 @@ export function Sidebar({ SidebarOpen, SetSidebarOpen }) {
             <BrainIcon /> BRAINLY
           </div>
           <div className="items flex-col mt-4">
+            <SidebarItems icon={<HomeIcon />} text="Home" /> //homeicon added
             <SidebarItems icon={<TwitterIcon />} text="Tweets" />
             <SidebarItems icon={<YoutubeIcon />} text="Videos" />
           </div>
