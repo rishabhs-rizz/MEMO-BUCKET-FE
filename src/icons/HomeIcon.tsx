@@ -1,3 +1,4 @@
+//home-icon.tsx
 export const HomeIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

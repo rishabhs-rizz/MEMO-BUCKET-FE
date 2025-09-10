@@ -23,9 +23,15 @@ export function Sidebar({ SidebarOpen, SetSidebarOpen }) {
             <BrainIcon /> BRAINLY
           </div>
           <div className="items flex-col mt-4">
-            <SidebarItems icon={<HomeIcon />} text="Home" />
-            <SidebarItems icon={<TwitterIcon />} text="Tweets" />
-            <SidebarItems icon={<YoutubeIcon />} text="Videos" />
+            <a href="http://localhost:5173/dashboard">
+              <SidebarItems icon={<HomeIcon />} text="Home" />
+            </a>
+            <a href="http://localhost:5173/dashboard/twitter">
+              <SidebarItems icon={<TwitterIcon />} text="Tweets" />
+            </a>
+            <a href="http://localhost:5173/dashboard/youtube">
+              <SidebarItems icon={<YoutubeIcon />} text="Videos" />
+            </a>
           </div>
         </>
       )}
